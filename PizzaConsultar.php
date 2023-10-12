@@ -1,13 +1,14 @@
 <?php
+include "./pizza.php";
 function pizzaConsultar(){
-    if(!isset($_GET["sabor"]) || !isset($_GET["tipo"])){
+    if(!isset($_POST["sabor"]) || !isset($_POST["tipo"])){
         echo "Error. Faltan parametros para la consulta de pizza.";
     }else{
-        $sabor = $_GET["sabor"];
-        $tipo = $_GET["tipo"];
+        $sabor = $_POST["sabor"];
+        $tipo = $_POST["tipo"];
         $pizzas = Pizza::LeerJSONPizzas();
         foreach($pizzas as $pizza){
-            if($pizza->tipo === $tipo && $pizza->sabor === $sabor){
+            if($pizza['tipo'] === $tipo && $pizza['sabor'] === $sabor){
                 return 'Si hay';
             }
         }

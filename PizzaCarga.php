@@ -12,6 +12,7 @@ function pizzaCarga(){
         $tipo = $_GET["tipo"];
         $cantidad = $_GET["cantidad"];
         $pizza = new Pizza($sabor, $precio, $tipo, $cantidad);
+        var_dump($pizza);
         if($pizza->PizzaExiste() == false){
             $pizzas = Pizza::LeerJSONPizzas();
             $pizzas[] = $pizza;
