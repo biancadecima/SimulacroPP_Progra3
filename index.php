@@ -1,27 +1,19 @@
 <?php
-//index.php:Recibe todas las peticiones que realiza el postman, y administra a que archivo se debe incluir.
-//include "./pizza.php";
-
-/*if($_SERVER['REQUEST_METHOD'] == 'GET'){
-    if(isset($_GET["sabor"]) && isset($_GET["precio"]) && isset($_GET["tipo"]) && isset($_GET["cantidad"])){
-        $sabor = $_GET["sabor"];
-        $precio = $_GET["precio"];
-        $tipo = $_GET["tipo"];
-        $cantidad = $_GET["cantidad"];
-        $pizza = new Pizza($sabor, $precio, $tipo, $cantidad);
-    }
-}else if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    if(isset($_GET["sabor"]) && isset($_GET["tipo"])){
-        $pizza = new Pizza($sabor, $tipo);
-    }
-}    */
+$rutaImagenVenta = 'C:\xampp\htdocs\SimulacroPP\ImagenesVenta';
+$rutaImagenPizza = 'C:\xampp\htdocs\SimulacroPP\ImagenesPizza';
 
 switch($_SERVER['REQUEST_METHOD']){
     case "POST":
         if(isset($_POST['accion'])){
-            if($_POST['accion'] === 'consultar'){
-                include "./PizzaConsultar.php";
-                echo pizzaConsultar();
+            switch($_POST['accion']){
+                case 'consultar':
+                    include "./PizzaConsultar.php";
+                    echo pizzaConsultar();
+                    break;
+                case 'venta':
+                    include "./AltaVenta.php";
+                    echo altaVenta($rutaImagenVenta);
+                    break;
             }
         }else{
             echo "Error. Faltan parametros.";
@@ -29,9 +21,15 @@ switch($_SERVER['REQUEST_METHOD']){
         break;
     case "GET":
         if(isset($_GET['accion'])){
-            if($_GET['accion'] === 'cargar'){
-                include "./PizzaCarga.php";
-                echo pizzaCarga(); 
+            switch($_GET['accion']){
+                case 'cargar':
+                    include "./PizzaCarga.php";
+                    echo pizzaCarga();
+                    break;
+                case 'consultarventas':
+                    include './VentasConsultar.php';
+                    ventaConsultar();
+                    break; 
             }
         }else{
             echo "Error. Faltan parametros.";

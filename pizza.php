@@ -70,5 +70,27 @@ Class Pizza{
         }
         return false;
     }
+
+    public static function ConsultarStock($sabor, $tipo){
+        $arrayPizzas = Pizza::LeerJSONPizzas();
+        foreach($arrayPizzas as $pizza){
+            if($pizza['tipo'] === $tipo && $pizza['sabor'] === $sabor){
+                return $pizza['cantidad'];
+            }
+        }
+        return false;
+    }
+
+    public static function ActualizarStock($tipo,$sabor, $cantidadventa){
+        $arrayPizzas = Pizza::LeerJSONPizzas();
+        foreach($arrayPizzas as &$pizza){
+            if($pizza['tipo'] === $tipo && $pizza['sabor'] === $sabor){
+                $pizza['cantidad'] =  ($pizza['cantidad'] - $cantidadventa);
+                Pizza::EscribirJSONPizzas($arrayPizzas);
+                return true;
+            }
+        }
+        return false;
+    }
 }
 ?>
