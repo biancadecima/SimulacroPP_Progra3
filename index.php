@@ -1,6 +1,7 @@
 <?php
 $rutaImagenVenta = 'C:\xampp\htdocs\SimulacroPP\ImagenesVenta';
 $rutaImagenPizza = 'C:\xampp\htdocs\SimulacroPP\ImagenesPizza';
+$rutaBackUp = 'C:\xampp\htdocs\SimulacroPP\BACKUPVENTAS';
 
 switch($_SERVER['REQUEST_METHOD']){
     case "POST":
@@ -13,6 +14,18 @@ switch($_SERVER['REQUEST_METHOD']){
                 case 'venta':
                     include "./AltaVenta.php";
                     echo altaVenta($rutaImagenVenta);
+                    break;
+                case 'cargar':
+                    include "./PizzaCarga.php";
+                    echo pizzaCargaConImagen($rutaImagenPizza);
+                    break;
+                case 'modificar':
+                    include './ModificarVenta.php';
+                    modificarVenta();
+                    break;
+                case 'borrar':
+                    include './BorrarVenta.php';
+                    borrarVenta($rutaImagenVenta, $rutaBackUp);
                     break;
             }
         }else{
@@ -35,5 +48,6 @@ switch($_SERVER['REQUEST_METHOD']){
             echo "Error. Faltan parametros.";
         }
         break;
+
 }
 ?>

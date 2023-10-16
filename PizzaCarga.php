@@ -12,7 +12,6 @@ function pizzaCarga(){
         $tipo = $_GET["tipo"];
         $cantidad = $_GET["cantidad"];
         $pizza = new Pizza($sabor, $precio, $tipo, $cantidad);
-        var_dump($pizza);
         if($pizza->PizzaExiste() == false){
             $pizzas = Pizza::LeerJSONPizzas();
             $pizzas[] = $pizza;
@@ -23,4 +22,33 @@ function pizzaCarga(){
     }
 }
 
-?>6
+function pizzaCargaConImagen($ruta){
+    if(!isset($_POST["sabor"]) || !isset($_POST["precio"]) || !isset($_POST["tipo"]) || !isset($_POST["cantidad"]) || !isset($_FILES["imagen"])){
+      return "Error. Faltan parametros para la carga de pizza.";
+    }else{
+        $sabor = $_POST["sabor"];
+        $precio = $_POST["precio"];
+        $tipo = $_POST["tipo"];
+        $cantidad = $_POST["cantidad"];
+        $imagen = $_FILES["imagen"];
+
+        $pizza = new Pizza($sabor, $precio, $tipo, $cantidad);
+        if($pizza->PizzaExiste() == false){
+            $pizzas = Pizza::LeerJSONPizzas();
+            $pizzas[] = $pizza;
+            Pizza::EscribirJSONPizzas($pizzas);
+            $respuesta = 'Se cargó la pizza';
+            if(move_uploaded_file($imagen['tmp_name'], $pizza->DestinoImagenPizza($ruta))){
+                $respuesta = $respuesta.' '.'Se guardó la imagen';
+            }else{
+                $respuesta = $respuesta.' '.'La imagen no pudo ser guardada';
+            }
+        }else{
+           $respuesta = 'La pizza ya existe, y fue actualizada'; 
+        }
+        
+    }
+    return $respuesta;
+}
+
+?>

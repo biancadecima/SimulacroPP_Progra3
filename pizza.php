@@ -92,5 +92,10 @@ Class Pizza{
         }
         return false;
     }
+
+    public function DestinoImagenPizza($ruta){
+        $destino = $ruta."\\".$this->tipo."-".$this->sabor.".png";
+        return $destino;
+    }
 }
 ?>
